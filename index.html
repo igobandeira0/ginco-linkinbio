@@ -73,36 +73,16 @@
     }
 
     .header {
-      padding: 22px 24px 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .logo-circle {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: var(--red);
+      padding: 18px 24px 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 26px;
-      font-weight: 600;
-      color: var(--white);
-      letter-spacing: -.5px;
-      box-shadow: 0 4px 16px rgba(179,48,32,.3);
     }
 
-    .header-text h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.1;
-      letter-spacing: -.3px;
+    .header-logo {
+      height: 54px;
+      width: auto;
+      display: block;
     }
 
     .header-text p {
@@ -254,6 +234,13 @@
       text-decoration: none;
       font-weight: 600;
     }
+    .footer-logo {
+      display: block;
+      margin: 0 auto 10px;
+      height: 36px;
+      width: auto;
+      opacity: .7;
+    }
   </style>
 </head>
 <body>
@@ -269,11 +256,7 @@
 
   <!-- HEADER -->
   <div class="header s1">
-    <div class="logo-circle">G</div>
-    <div class="header-text">
-      <h1>Ginco Urbanismo</h1>
-      <p>Há 25 anos transformando vidas e regiões</p>
-    </div>
+    <img class="header-logo" src="logofginco.jpg" alt="Ginco Urbanismo">
   </div>
 
   <!-- SOCIALS -->
@@ -329,15 +312,29 @@
 
   <!-- VIDEO -->
   <div class="video-wrap s5">
-    <iframe
+    <iframe id="latest-video"
       src="https://www.youtube.com/embed/OALgFuxYyGk?rel=0&autoplay=1&mute=1"
-      title="Conheça o Ginco Zurique"
+      title="Último vídeo Ginco Urbanismo"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen></iframe>
   </div>
 
+  <script>
+    fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=UCP0sJaMqBW0RMGFKxzouVcw')
+      .then(r => r.json())
+      .then(data => {
+        const id = data.items?.[0]?.guid?.split(':').pop();
+        if (id) {
+          document.getElementById('latest-video').src =
+            'https://www.youtube.com/embed/' + id + '?rel=0&autoplay=1&mute=1';
+        }
+      })
+      .catch(() => {});
+  </script>
+
   <!-- FOOTER -->
   <div class="footer-note">
+    <img class="footer-logo" src="logofginco.jpg" alt="Ginco Urbanismo">
     © 2025 Ginco Urbanismo · CRECI MT: 1008-J<br>
     <a href="https://www.gincourbanismo.com.br/politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a>
   </div>
